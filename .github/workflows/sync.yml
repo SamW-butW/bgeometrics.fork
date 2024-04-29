@@ -1,0 +1,23 @@
+name: Sync Fork with Original Repo
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs at 00:00 UTC everyday
+
+jobs:
+  sync-with-upstream:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out the forked repository
+      uses: actions/checkout@v2
+      with:
+        repository: SamW-butW/bgeometrics.fork
+        ref: master
+
+    - name: Sync fork with original repository
+      uses: TG908/fork-sync@v1
+      with:
+        head: BGeometrics/bgeometrics.github.io
+        base: SamW-butW/bgeometrics.fork
+        base_branch: master
+        github_token: ${{ secrets.GITHUB_TOKEN }}
